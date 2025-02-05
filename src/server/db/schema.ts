@@ -47,4 +47,5 @@ export const habitatPokemon = sqliteTable(
 export const pokemon = sqliteTable("pokemon", {
   id: int("id").primaryKey(),
   name: text("name").notNull(),
+  img: text("img").notNull(),
 });
