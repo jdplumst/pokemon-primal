@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { getEggs, hatchEgg } from "~/server/actions/hatch";
+import { hatchEgg } from "~/server/actions/hatch";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -11,7 +11,7 @@ import {
 } from "~/components/ui/dropdown-menu";
 
 export default function HatchForm(props: {
-  eggs: Awaited<ReturnType<typeof getEggs>>;
+  eggs: { id: number; name: string }[];
 }) {
   const [egg, setEgg] = useState<{ id: number; name: string | null }>({
     id: 0,
@@ -58,7 +58,6 @@ export default function HatchForm(props: {
             hatched!
           </div>
           <img src={data.pokemon.img} alt={data.pokemon.name} />
-          <h2 className="text-lg font-bold capitalize">{data.pokemon.name}</h2>
         </div>
       )}
     </>

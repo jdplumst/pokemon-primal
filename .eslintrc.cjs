@@ -55,7 +55,8 @@ const config = {
           "ctx.db"
         ]
       }
-    ]
+    ],
+    "@next/next/no-img-element": "off"
   }
 }
 module.exports = config;

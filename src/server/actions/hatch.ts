@@ -1,6 +1,7 @@
 "use server";
 
 import { eq, sql } from "drizzle-orm";
+import { z } from "zod";
 import { db } from "~/server/db";
 import { eggGroup, eggGroupPokemon, pokemon } from "~/server/db/schema";
 
@@ -10,12 +11,16 @@ export async function getEggs() {
 }
 
 export async function hatchEgg(_previousState: unknown, formData: FormData) {
-  const eggId = formData.get("eggId");
-  if (!eggId) {
+  const formSchema = z.object({
+    eggId: z.coerce.number(),
+  });
+
+  const input = formSchema.safeParse(Object.fromEntries(formData));
+  if (input.error) {
     return { error: "You must select an egg." };
   }
-  const parsedEggId = parseInt(String(eggId));
-  if (isNaN(parsedEggId) || parsedEggId <= 0) {
+
+  if (input.data.eggId === 0) {
     return { error: "You must select an egg." };
   }
 
@@ -27,7 +32,7 @@ export async function hatchEgg(_previousState: unknown, formData: FormData) {
     })
     .from(pokemon)
     .innerJoin(eggGroupPokemon, eq(eggGroupPokemon.pokemonId, pokemon.id))
-    .where(eq(eggGroupPokemon.eggGroupId, parsedEggId))
+    .where(eq(eggGroupPokemon.eggGroupId, input.data.eggId))
     .orderBy(sql`RANDOM()`)
     .limit(1);
 
