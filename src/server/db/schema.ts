@@ -1,30 +1,50 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { sql } from "drizzle-orm";
-import { index, int, sqliteTableCreator, text } from "drizzle-orm/sqlite-core";
+import { int, primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-/**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
-export const createTable = sqliteTableCreator((name) => `pokemon-primal_${name}`);
+export const eggGroup = sqliteTable("egg_group", {
+  id: int("id").primaryKey(),
+  name: text("name").notNull(),
+});
 
-export const posts = createTable(
-  "post",
+export const eggGroupPokemon = sqliteTable(
+  "egg_group_pokemon",
   {
-    id: int("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-    name: text("name", { length: 256 }),
-    createdAt: int("created_at", { mode: "timestamp" })
-      .default(sql`(unixepoch())`)
-      .notNull(),
-    updatedAt: int("updated_at", { mode: "timestamp" }).$onUpdate(
-      () => new Date()
-    ),
+    eggGroupId: int("egg_group_id")
+      .notNull()
+      .references(() => eggGroup.id, { onDelete: "cascade" }),
+    pokemonId: int("pokemon_id")
+      .notNull()
+      .references(() => pokemon.id, {
+        onDelete: "cascade",
+      }),
   },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
-  })
+  (table) => [primaryKey({ columns: [table.eggGroupId, table.pokemonId] })],
 );
+
+export const habitat = sqliteTable("habitat", {
+  id: int("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+});
+
+export const habitatPokemon = sqliteTable(
+  "habitat_pokemon",
+  {
+    habitatId: int("habitat_id")
+      .notNull()
+      .references(() => habitat.id, { onDelete: "cascade" }),
+    pokemonId: int("pokemon_id")
+      .notNull()
+      .references(() => pokemon.id, {
+        onDelete: "cascade",
+      }),
+  },
+  (table) => [primaryKey({ columns: [table.habitatId, table.pokemonId] })],
+);
+
+export const pokemon = sqliteTable("pokemon", {
+  id: int("id").primaryKey(),
+  name: text("name").notNull(),
+});
