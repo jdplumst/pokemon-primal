@@ -18,7 +18,7 @@ export default function HomePage() {
             href="/breed"
             className="bg-primary hover:bg-primary/80 rounded-lg px-6 py-4 text-center text-lg font-bold text-white transition-colors duration-300"
           >
-            Breed Pokemon
+            Breed Pokémon
           </Link>
           <Link
             href="/hatch"
