@@ -1,6 +1,6 @@
 "use server";
 
-import { eq } from "drizzle-orm";
+import { and, eq, ne } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "~/server/db";
 import { eggGroup, eggGroupPokemon, pokemon } from "~/server/db/schema";
@@ -33,17 +33,36 @@ export async function breedPokemon(
     .select({ id: eggGroup.id, name: eggGroup.name })
     .from(eggGroup)
     .leftJoin(eggGroupPokemon, eq(eggGroup.id, eggGroupPokemon.eggGroupId))
-    .where(eq(eggGroupPokemon.pokemonId, input.data.pokemon1Id));
+    .where(
+      and(
+        eq(eggGroupPokemon.pokemonId, input.data.pokemon1Id),
+        ne(eggGroupPokemon.eggGroupId, 15), // no-egg group
+      ),
+    );
 
   const eggGroups2 = await db
     .select({ id: eggGroup.id, name: eggGroup.name })
     .from(eggGroup)
     .leftJoin(eggGroupPokemon, eq(eggGroup.id, eggGroupPokemon.eggGroupId))
-    .where(eq(eggGroupPokemon.pokemonId, input.data.pokemon2Id));
+    .where(
+      and(
+        eq(eggGroupPokemon.pokemonId, input.data.pokemon2Id),
+        ne(eggGroupPokemon.eggGroupId, 15), // no-egg group
+      ),
+    );
 
-  const sharedEggGroups = eggGroups1.filter((eggGroup) =>
-    eggGroups2.some((eggGroup2) => eggGroup.id === eggGroup2.id),
-  );
+  let sharedEggGroups = eggGroups1;
+
+  // Egg Group 13 is for ditto
+  if (eggGroups1.find((eggGroup) => eggGroup.id === 13)) {
+    sharedEggGroups = eggGroups2;
+  } else if (eggGroups2.find((eggGroup) => eggGroup.id === 13)) {
+    sharedEggGroups = eggGroups1;
+  } else {
+    sharedEggGroups = eggGroups1.filter((eggGroup) =>
+      eggGroups2.some((eggGroup2) => eggGroup.id === eggGroup2.id),
+    );
+  }
 
   if (sharedEggGroups.length === 0) {
     return {
