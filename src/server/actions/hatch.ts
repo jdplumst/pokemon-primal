@@ -1,12 +1,16 @@
 "use server";
 
-import { eq, sql } from "drizzle-orm";
+import { eq, ne, sql } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "~/server/db";
 import { eggGroup, eggGroupPokemon, pokemon } from "~/server/db/schema";
 
 export async function getEggs() {
-  const eggs = await db.select().from(eggGroup).orderBy(eggGroup.id);
+  const eggs = await db
+    .select()
+    .from(eggGroup)
+    .where(ne(eggGroup.id, 15)) // no-egg group
+    .orderBy(eggGroup.id);
   return eggs;
 }
 
