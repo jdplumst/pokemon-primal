@@ -72,7 +72,7 @@ export default function BreedForm() {
                     {selectedPokemon.pokemon1.name}
                   </div>
                 ) : (
-                  "Select Pokemon 1"
+                  "Select Pokémon 1"
                 )}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
@@ -80,7 +80,7 @@ export default function BreedForm() {
             <PopoverContent className="w-[200px] p-0">
               <Command>
                 <CommandInput
-                  placeholder="Search Pokemon..."
+                  placeholder="Search Pokémon..."
                   onValueChange={(p) =>
                     setSearchPokemon({ ...searchPokemon, pokemon1: p })
                   }
@@ -131,7 +131,7 @@ export default function BreedForm() {
                     {selectedPokemon.pokemon2.name}
                   </div>
                 ) : (
-                  "Select Pokemon 2"
+                  "Select Pokémon 2"
                 )}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
@@ -139,7 +139,7 @@ export default function BreedForm() {
             <PopoverContent className="w-[200px] p-0">
               <Command>
                 <CommandInput
-                  placeholder="Search Pokemon..."
+                  placeholder="Search Pokémon..."
                   onValueChange={(p) =>
                     setSearchPokemon({ ...searchPokemon, pokemon2: p })
                   }
