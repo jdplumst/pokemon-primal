@@ -85,7 +85,7 @@ export default function BreedForm() {
                   placeholder="Search Pokémon..."
                   onValueChange={(p) => {
                     setSearchPokemon1(p);
-                    pokemon1.refetch();
+                    void pokemon1.refetch();
                   }}
                 />
                 <CommandList>
@@ -140,7 +140,7 @@ export default function BreedForm() {
                   placeholder="Search Pokémon..."
                   onValueChange={(p) => {
                     setSearchPokemon2(p);
-                    pokemon2.refetch();
+                    void pokemon2.refetch();
                   }}
                 />
                 <CommandList>
