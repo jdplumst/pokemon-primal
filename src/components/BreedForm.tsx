@@ -21,33 +21,37 @@ import { cn } from "~/lib/utils";
 import { breedPokemon } from "~/server/actions/breed";
 
 export default function BreedForm() {
-  const [searchPokemon, setSearchPokemon] = useState({
-    pokemon1: "",
-    pokemon2: "",
-  });
+  const [searchPokemon1, setSearchPokemon1] = useState("");
+  const [searchPokemon2, setSearchPokemon2] = useState("");
 
-  const [selectedPokemon, setSelectedPokemon] = useState({
-    pokemon1: {
-      id: 0,
-      name: "",
-      img: "",
-    },
-    pokemon2: {
-      id: 0,
-      name: "",
-      img: "",
-    },
+  const [selectedPokemon1, setSelectedPokemon1] = useState<{
+    id: number;
+    name: string;
+    img: string;
+  }>({
+    id: 0,
+    name: "",
+    img: "",
+  });
+  const [selectedPokemon2, setSelectedPokemon2] = useState<{
+    id: number;
+    name: string;
+    img: string;
+  }>({
+    id: 0,
+    name: "",
+    img: "",
   });
 
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
 
   const pokemon1 = api.pokemon.getPokemon.useQuery({
-    name: searchPokemon.pokemon1,
+    name: searchPokemon1,
   });
 
   const pokemon2 = api.pokemon.getPokemon.useQuery({
-    name: searchPokemon.pokemon2,
+    name: searchPokemon2,
   });
 
   const [data, action, isPending] = useActionState(breedPokemon, undefined);
@@ -67,10 +71,8 @@ export default function BreedForm() {
                 aria-expanded={open1}
                 className="w-[200px] justify-between"
               >
-                {selectedPokemon?.pokemon1.name ? (
-                  <div className="capitalize">
-                    {selectedPokemon.pokemon1.name}
-                  </div>
+                {selectedPokemon1.name ? (
+                  <div className="capitalize">{selectedPokemon1.name}</div>
                 ) : (
                   "Select Pokémon 1"
                 )}
@@ -81,9 +83,7 @@ export default function BreedForm() {
               <Command>
                 <CommandInput
                   placeholder="Search Pokémon..."
-                  onValueChange={(p) =>
-                    setSearchPokemon({ ...searchPokemon, pokemon1: p })
-                  }
+                  onValueChange={(p) => setSearchPokemon1(p)}
                 />
                 <CommandList>
                   <CommandEmpty>No pokemon found.</CommandEmpty>
@@ -93,10 +93,7 @@ export default function BreedForm() {
                         key={p.id}
                         value={p.name}
                         onSelect={() => {
-                          setSelectedPokemon({
-                            ...selectedPokemon,
-                            pokemon1: { id: p.id, name: p.name, img: p.img },
-                          });
+                          setSelectedPokemon1(p);
                           setOpen1(false);
                         }}
                         className="capitalize"
@@ -104,7 +101,7 @@ export default function BreedForm() {
                         <Check
                           className={cn(
                             "mr-2 h-4 w-4",
-                            selectedPokemon.pokemon1.name === p.name
+                            selectedPokemon1.name === p.name
                               ? "opacity-100"
                               : "opacity-0",
                           )}
@@ -126,10 +123,8 @@ export default function BreedForm() {
                 aria-expanded={open2}
                 className="w-[200px] justify-between"
               >
-                {selectedPokemon?.pokemon2.name ? (
-                  <div className="capitalize">
-                    {selectedPokemon.pokemon2.name}
-                  </div>
+                {selectedPokemon2.name ? (
+                  <div className="capitalize">{selectedPokemon2.name}</div>
                 ) : (
                   "Select Pokémon 2"
                 )}
@@ -140,9 +135,7 @@ export default function BreedForm() {
               <Command>
                 <CommandInput
                   placeholder="Search Pokémon..."
-                  onValueChange={(p) =>
-                    setSearchPokemon({ ...searchPokemon, pokemon2: p })
-                  }
+                  onValueChange={(p) => setSearchPokemon2(p)}
                 />
                 <CommandList>
                   <CommandEmpty>No pokemon found.</CommandEmpty>
@@ -152,10 +145,7 @@ export default function BreedForm() {
                         key={p.id}
                         value={p.name}
                         onSelect={() => {
-                          setSelectedPokemon({
-                            ...selectedPokemon,
-                            pokemon2: { id: p.id, name: p.name, img: p.img },
-                          });
+                          setSelectedPokemon2(p);
                           setOpen2(false);
                         }}
                         className="capitalize"
@@ -163,7 +153,7 @@ export default function BreedForm() {
                         <Check
                           className={cn(
                             "mr-2 h-4 w-4",
-                            selectedPokemon.pokemon2.name === p.name
+                            selectedPokemon2.name === p.name
                               ? "opacity-100"
                               : "opacity-0",
                           )}
@@ -178,16 +168,8 @@ export default function BreedForm() {
             </PopoverContent>
           </Popover>
         </div>
-        <input
-          type="hidden"
-          name="pokemon1Id"
-          value={selectedPokemon.pokemon1.id}
-        />
-        <input
-          type="hidden"
-          name="pokemon2Id"
-          value={selectedPokemon.pokemon2.id}
-        />
+        <input type="hidden" name="pokemon1Id" value={selectedPokemon1?.id} />
+        <input type="hidden" name="pokemon2Id" value={selectedPokemon2?.id} />
         <Button type="submit" disabled={isPending}>
           Breed
         </Button>

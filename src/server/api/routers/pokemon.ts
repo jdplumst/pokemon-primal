@@ -13,8 +13,6 @@ export const pokemonRouter = createTRPCRouter({
         .where(like(pokemon.name, "%" + input.name + "%"))
         .limit(20);
 
-      console.log("Input: ", input);
-      console.log(pokemonData);
       return pokemonData;
     }),
 });
