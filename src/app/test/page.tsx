@@ -50,7 +50,9 @@ export default function TestPage() {
   const pokemon1 = useQuery({
     queryKey: ["pokemon1", searchPokemon1],
     queryFn: async () => {
-      const res = await fetch("/api/pokemon?name=" + searchPokemon1);
+      const res = await fetch("/api/pokemon?name=" + searchPokemon1, {
+        cache: "no-store",
+      });
       const resSchema = z.object({
         pokemon: z.array(
           z.object({
@@ -72,7 +74,9 @@ export default function TestPage() {
   const pokemon2 = useQuery({
     queryKey: ["pokemon2", searchPokemon2],
     queryFn: async () => {
-      const res = await fetch("/api/pokemon?name=" + searchPokemon2);
+      const res = await fetch("/api/pokemon?name=" + searchPokemon2, {
+        cache: "no-store",
+      });
       const resSchema = z.object({
         pokemon: z.array(
           z.object({
