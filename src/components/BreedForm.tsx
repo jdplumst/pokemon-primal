@@ -83,7 +83,10 @@ export default function BreedForm() {
               <Command>
                 <CommandInput
                   placeholder="Search Pokémon..."
-                  onValueChange={(p) => setSearchPokemon1(p)}
+                  onValueChange={(p) => {
+                    setSearchPokemon1(p);
+                    pokemon1.refetch();
+                  }}
                 />
                 <CommandList>
                   <CommandEmpty>No pokemon found.</CommandEmpty>
@@ -135,7 +138,10 @@ export default function BreedForm() {
               <Command>
                 <CommandInput
                   placeholder="Search Pokémon..."
-                  onValueChange={(p) => setSearchPokemon2(p)}
+                  onValueChange={(p) => {
+                    setSearchPokemon2(p);
+                    pokemon2.refetch();
+                  }}
                 />
                 <CommandList>
                   <CommandEmpty>No pokemon found.</CommandEmpty>
