@@ -1,5 +1,4 @@
 import BreedForm from "~/components/BreedForm";
-import { getPokemonForBreed } from "~/server/actions/breed";
 
 export default async function BreedPage() {
   return (

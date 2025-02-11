@@ -3,13 +3,7 @@
 import { and, eq, ne } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "~/server/db";
-import { eggGroup, eggGroupPokemon, pokemon } from "~/server/db/schema";
-
-export async function getPokemonForBreed() {
-  const pokemonData = await db.select().from(pokemon);
-
-  return pokemonData;
-}
+import { eggGroup, eggGroupPokemon } from "~/server/db/schema";
 
 export async function breedPokemon(
   _previousState: unknown,
