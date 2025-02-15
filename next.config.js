@@ -9,11 +9,15 @@ const config = {
   async headers() {
     return [
       {
-        source: "/:path*",
+        source: "/api/:path*",
         headers: [
           {
             key: "Netlify-Vary",
             value: "query",
+          },
+          {
+            key: "Netlify-CDN-Cache-Control",
+            value: "public, max-age=0, must-revalidate",
           },
         ],
       },
