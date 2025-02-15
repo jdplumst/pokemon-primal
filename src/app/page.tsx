@@ -7,7 +7,7 @@ export default async function LandingPage() {
         Welcome to Pokémon Primal
       </h1>
       <p className="mb-8 max-w-2xl text-center text-xl md:text-2xl">
-        Discover and generate Pokemon based on their habitat or egg group
+        Discover and generate Pokémon based on their habitat or egg group
       </p>
       <Link
         href="/home"
