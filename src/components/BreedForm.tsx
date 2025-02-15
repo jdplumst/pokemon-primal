@@ -46,13 +46,19 @@ export default function BreedForm() {
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
 
-  const pokemon1 = api.pokemon.getPokemon.useQuery({
-    name: searchPokemon1,
-  });
+  const pokemon1 = api.pokemon.getPokemon.useQuery(
+    {
+      name: searchPokemon1,
+    },
+    { staleTime: 0, gcTime: 0 },
+  );
 
-  const pokemon2 = api.pokemon.getPokemon.useQuery({
-    name: searchPokemon2,
-  });
+  const pokemon2 = api.pokemon.getPokemon.useQuery(
+    {
+      name: searchPokemon2,
+    },
+    { staleTime: 0, gcTime: 0 },
+  );
 
   const [data, action, isPending] = useActionState(breedPokemon, undefined);
 
