@@ -5,6 +5,20 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Netlify-Vary",
+            value: "query",
+          },
+        ],
+      },
+    ];
+  },
+};
 
 export default config;
