@@ -13,7 +13,7 @@ const config = {
         headers: [
           {
             key: "Netlify-CDN-Cache-Control",
-            value: "public, max-age=0, must-revalidate",
+            value: "no-cache",
           },
         ],
       },
