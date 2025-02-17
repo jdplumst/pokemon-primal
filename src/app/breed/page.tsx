@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import BreedForm from "~/components/BreedForm";
 
 export default async function BreedPage() {
