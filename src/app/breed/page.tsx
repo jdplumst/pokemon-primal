@@ -1,4 +1,4 @@
-import BreedForm from "~/components/BreedForm";
+import BreedForm from "~/components/breed-form";
 
 export default async function BreedPage() {
   return (

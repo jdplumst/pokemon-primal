@@ -1,4 +1,4 @@
-import WildForm from "~/components/WildForm";
+import WildForm from "~/components/wild-form";
 import { getHabitats } from "~/server/actions/wild";
 
 export default async function WildPage() {

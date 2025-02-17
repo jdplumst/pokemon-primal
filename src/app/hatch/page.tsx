@@ -1,4 +1,4 @@
-import HatchForm from "~/components/HatchForm";
+import HatchForm from "~/components/hatch-form";
 import { getEggs } from "~/server/actions/hatch";
 
 export default async function HatchPage() {
